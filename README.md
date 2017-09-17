@@ -9,6 +9,7 @@ get<newline>filename<newline>
 put<newline>filename<newline>
 ls<newline>anytext<newline>
 exit<newline>anytext<newline>
+  
 Inputs given in this manners are recorded and sent to the respective if else if condition statement where server and client communication is established.The if..else if..else loop has been defined for incorporating all four types of user input.
 
 Depending on what input the user gives, command (for e.g get) <newline> filename(for e.g foo2), that particular 'if' condition is selected, and inside the if loop for that option, the communication between client and server takes place.
@@ -41,6 +42,7 @@ After executing the program, integrity of files can be assured by checking the m
 For implementing reliability, this program covers following logic - 
 1. for first data packet transferred, the packet which is transferred is also stored in a temp buffer by the sender side. Sender waits for an acknowledgement from the received with a timeout value of 1 sec. If an ACK is received from receiver, within the timeout value, the for loop is taken to next iteration and next packet is trasnferred. If ACK does not occur within timeout value, the iteration value (i) is set to i-1 and loop is continued, thus data would be sent again.
 Difference between duplicate and original acknowledgements has been coded into program, by ACK0 - original acknowledgement and ACK1, duplicate acknowledgement.
+
 2.Both sender and receiver, before transmitting the data packets,store previously sent data packet in a temp buffer and each time,check if the new packet that has been received is a new original packet or duplicate of previous packet. As sender waits for receiver ack and packets do not arrive out of order being one tranfer-one Ack at a time, reliability is ensure by this technique. Also, if any ACks are lost, sender would not receive ACK, so it would resend previous packet after timeout. Receiver checks if this is original packet or duplicate packet,if duplicate it sends duplicate ACK, i.e ACK1, to continue the process forward.
 
 I tried to check the reliability by transferring a 1MB file, during which I observed that for ACKs which were not received within timeout period
